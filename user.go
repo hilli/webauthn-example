@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/rand"
 	"encoding/binary"
+	"encoding/hex"
 
 	"github.com/duo-labs/webauthn/protocol"
 	"github.com/duo-labs/webauthn/webauthn"
@@ -64,6 +65,10 @@ func (u *User) AddCredential(cred webauthn.Credential) {
 // WebAuthnCredentials returns credentials owned by the user
 func (u User) WebAuthnCredentials() []webauthn.Credential {
 	return u.credentials
+}
+
+func (u User) String() string {
+	return "User{id: " + hex.EncodeToString(u.WebAuthnID()) + ", name: " + u.WebAuthnName() + ", displayName: " + u.WebAuthnDisplayName() + "}"
 }
 
 // CredentialExcludeList returns a CredentialDescriptor array filled
