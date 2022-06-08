@@ -60,6 +60,7 @@
           console.log(credentialCreationOptions)
           credentialCreationOptions.publicKey.challenge = bufferDecode(credentialCreationOptions.publicKey.challenge);
           credentialCreationOptions.publicKey.user.id = bufferDecode(credentialCreationOptions.publicKey.user.id);
+          credentialCreationOptions.publicKey.authenticatorSelection.userVerification = "preferred";
           if (credentialCreationOptions.publicKey.excludeCredentials) {
             for (var i = 0; i < credentialCreationOptions.publicKey.excludeCredentials.length; i++) {
               credentialCreationOptions.publicKey.excludeCredentials[i].id = bufferDecode(credentialCreationOptions.publicKey.excludeCredentials[i].id);
@@ -123,6 +124,7 @@
           credentialRequestOptions.publicKey.allowCredentials.forEach(function (listItem) {
             listItem.id = bufferDecode(listItem.id)
           });
+          credentialRequestOptions.publicKey.userVerification = "preferred";
 
           return navigator.credentials.get({
             publicKey: credentialRequestOptions.publicKey
