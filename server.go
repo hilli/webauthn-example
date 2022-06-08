@@ -21,10 +21,10 @@ func main() {
 
 	var err error
 	webAuthn, err = webauthn.New(&webauthn.Config{
-		RPDisplayName: "Foobar Corp.",     // Display Name for your site
-		RPID:          "localhost",        // Generally the domain name for your site
-		RPOrigin:      "http://localhost", // The origin URL for WebAuthn requests
-		// RPIcon: "https://duo.com/logo.png", // Optional icon URL for your site
+		RPDisplayName: "Foobar Corp.",                               // Display Name for your site
+		RPID:          "localhost",                                  // Generally the domain name for your site
+		RPOrigin:      "http://localhost:8080",                      // The origin URL for WebAuthn requests
+		RPIcon:        "https://duo.com/assets/img/duoLogo-web.png", // Optional icon URL for your site
 	})
 
 	if err != nil {
@@ -130,6 +130,8 @@ func FinishRegistration(w http.ResponseWriter, r *http.Request) {
 
 	user.AddCredential(*credential)
 
+	fmt.Printf("User registration completed for %+v\n", user)
+
 	jsonResponse(w, "Registration Success", http.StatusOK)
 }
 
@@ -201,6 +203,8 @@ func FinishLogin(w http.ResponseWriter, r *http.Request) {
 		jsonResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
+	fmt.Printf("User %+v logged in\n", user)
 
 	// handle successful login
 	jsonResponse(w, "Login Success", http.StatusOK)
